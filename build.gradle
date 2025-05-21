@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'war'
+    id 'org.gretty' version '3.0.9'
 }
 
 group = 'goitdev'
@@ -12,8 +14,23 @@ repositories {
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+
+    // https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf
+    implementation 'org.thymeleaf:thymeleaf:3.1.3.RELEASE'
 }
 
 test {
     useJUnitPlatform()
+}
+
+gretty {
+    servletContainer = 'tomcat9'  // version Tomcat: tomcat8, tomcat9, tomcat10
+    contextPath = '/'             // Contest path of application
+    httpPort = 8080               // Port
+
+    // Settings for automatic reload
+    scanInterval = 1 // Check changes every second
+    fastReload = true // Fast reload changes
 }
